@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POKER</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <h1 class="title">POKER</h1>
+    <div class="container">
+        
+        <div class="main">
+            <div class="cajas" id="cpu">
+                <!-- <img src="./asstes/images/10_of_clubs.png" alt=""> -->
+            </div>
+            <div class="cajas" id="comun"></div>
+            <div class="cajas" id="jugador"></div>
+        </div>
+        <aside class="apuestas">
+            <div class="marcador">
+                <p class="dinero">Saldo: <span id="saldo">1000</span></p>
+                <p class="dinero">Apostado: <span id="apostado">0</span></p>
+                <p class="dinero">Total apostado: <span id="total">0</span></p>
+            </div>
+            <h2 id="hora">"¡Es hora de elegir tu apuesta!"</h2>
+            <div class="apuesta" id="apuesta">
+                <button id="menos">-</button>
+                <input id="cantidad" type="number" value="100" disabled>
+                <button id="mas">+</button>
+            </div>
+            <div class="botones">
+                <button id="enviar">Enviar</button>
+                <button id="noIr">No Ir</button>
+            </div>
+            
+           
+        </aside>
+    </div>
+    
+
+    <script src="./js/script.js"></script>
+
+</body>
+</html>
