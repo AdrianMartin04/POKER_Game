@@ -1,27 +1,41 @@
 body{
-    background-color: #173b08;
+    background-color:  var(--verdeFondo);
+
+}
+
+:root{
+    --rojo: #800000;
+    --oro:  #FFD700;
+    --blanco:  #FFFFFF;
+    --negro:   #000000;
+    --verdeFondo:  #002e00;
+    --gris:  #A9A9A9;
+    --texto: #D3D3D3;
 }
 .container{
-    width: 1600px;
+    width: 1200px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 250px 1fr ;
+    grid-template-columns: 1fr;
+    grid-template-rows: 670px 100px;
+    gap: 20px;
     grid-template-areas: 
-        "apuestas main";
-    gap: 100px;
+        "main"
+        "apuestas";
+
 }
 .title{
     text-align: center;
-    color: red;
+    color: var(--rojo);
 }
 .main{
-    width: 1000px;
+    min-width: 1000px;
     margin: 0 auto;
     gap: 10px;
     display: grid;
-    height: 80vh;
+    /* min-height: 670px; */
     grid-template-columns: 1fr;
-    grid-template-rows: 2fr 3fr 2fr;
+    grid-template-rows: 200px 250px 200px;
     grid-template-areas: 
         "cpu"
         "comun"
@@ -29,7 +43,7 @@ body{
     grid-area: main;
 }
 .cajas{
-    border: 1px solid red;
+    border: 1px solid var(--rojo);
     border-radius: 10px;
     display: flex;
     justify-content: center;
@@ -46,14 +60,28 @@ body{
 }
 .apuestas{
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 70vh;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    padding: 5px;
+    height: 100px;
     grid-area: apuestas;
 }
+.marcador{
+    display: flex;
+}
 .dinero{
-    color: rgb(251, 255, 0);
-    font-size: 2rem;
+    color: var(--texto);
+    font-size: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 15px ;
+    margin: 0;
+}
+.dinero>span{
+    margin: 15px; 
 }
 .apuesta{
     display: flex;
@@ -61,17 +89,24 @@ body{
     justify-content: center;
 }
 .apuesta>button{
-    width: 62px;
-    height: 62px;
+    width: 40px;
+    height: 40px;
+}
+#menos{
+    border-radius: 10px 0 0 10px;
+}
+#mas{
+    border-radius: 0 10px 10px 0;
 }
 .apuesta>input{
-    height: 60px;
+    height: 36px;
     border: none;
-    background-color:rgb(255, 166, 0);
-    font-size: 2rem;
+    background-color: var(--rojo);
+    font-size: 1.2rem;
     width: 120px;
     text-align: center;
-    color: white;
+    color: var(--texto);
+    border: 1px solid var(--gris);
 }
 
 img{
@@ -79,19 +114,27 @@ img{
     padding: 10px;
 }
 h2{
-    color: red;
+    color: var(--rojo);
     font-weight: 100;
-    font-size: 2rem;
-    height: 74px;
+    font-size: 1.5rem;
 }
 button{
-    background-color: rgb(255, 166, 0);
-    color: white;
-    font-size: 2rem;
+    background-color: var(--rojo);
+    color: var(--texto);
+    font-size: 1.2rem;
     border: none;
+    height: 40px;
+    border: 1px  solid var(--gris);
 }
 .botones{
     display: flex;
-    flex-direction: column;
     gap: 10px;
+    margin: 10px;
+}
+.botones button{
+    border-radius: 10px;
+}
+button:hover, input:hover{
+    background-color: var(--texto);
+    color: var(--rojo);
 }

@@ -6,12 +6,16 @@ const apuesta = document.getElementById("apuesta");
 const hora = document.getElementById("hora");
 const cantidad = document.getElementById("cantidad");
 const enviar = document.getElementById("enviar");
+const noIr = document.getElementById("noIr");
 const saldo =  document.getElementById("saldo");
 const miApuesta = document.getElementById("apostado");
 const totalApuesta = document.getElementById("total");
 
 
-hora.style.color= "#173b08";
+hora.style.color= "var(--oro)";
+hora.style.opacity=0;
+enviar.disabled=true;
+noIr.disabled=true;
 
 let baraja  = [...cartas];
 
@@ -58,8 +62,9 @@ const repartir = (objetivo, cantidad) => {
         }
     }
     setTimeout (() => {
-        hora.style.color= "red";
-
+        hora.style.opacity=1;
+        enviar.disabled=false;
+        noIr.disabled=false;
     }, 2000);
 }
 
@@ -67,10 +72,10 @@ const apostar = (event) => {
     if(event.target.nodeName=="BUTTON"){
         if(event.target.textContent.includes('+')){
             cantidad.value= parseInt(cantidad.value)+100;
-        }else{
-            if(cantidad.value>0)
-                cantidad.value= parseInt(cantidad.value)-100;
         }
+        if(cantidad.value>0 && event.target.textContent.includes('-'))
+            cantidad.value= parseInt(cantidad.value)-100;
+        
     }
 }
 
@@ -83,7 +88,9 @@ const enviarApuesta = () => {
     saldo.textContent  = parseInt(saldo.textContent)-apu;
     let aux=  parseInt(miApuesta.textContent);
     miApuesta.textContent = parseInt(apu) + parseInt(aux);
-    hora.style.color= "#173b08";
+    hora.style.opacity=0;
+    enviar.disabled=true;
+    noIr.disabled=true;
     repartirMesa();
 }
 
@@ -92,7 +99,9 @@ const repartirMesa = () =>{
     if(cartasMesa.children.length<5)
         repartir(cartasMesa,1);
     else
-    hora.style.color= "#173b08";
+        hora.style.opacity=0;
+        enviar.disabled=true;
+        noIr.disabled=true;
 }
 
 document.addEventListener("DOMContentLoaded", barajarCartas);
