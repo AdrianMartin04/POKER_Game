@@ -134,6 +134,10 @@ button{
 .botones button{
     border-radius: 10px;
 }
+.btn__repartir{
+    width: 425px;
+    border-radius: 10px;
+}
 button:hover, input:hover{
     background-color: var(--texto);
     color: var(--rojo);
