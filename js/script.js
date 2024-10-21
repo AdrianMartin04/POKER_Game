@@ -23,6 +23,10 @@ apuesta.style.display="none";
 let baraja  = [];
     
 const barajarCartas = () =>{
+    window.clearTimeout();
+    borrarCartas(cartasCPU);
+    borrarCartas(cartasMesa);
+    borrarCartas(cartasJugador);
     baraja = [...cartas];
     numerosMesa = [];
     tiposMesa = [];
@@ -30,6 +34,8 @@ const barajarCartas = () =>{
     hora.style.opacity=0;
     apuesta.style.display="flex";
     btnRepartir.style.display="none";
+    enviar.disabled=true;
+    noIr.disabled=true;
     baraja.sort(() => Math.random() - 0.5);
     repartirCartasInicio();
 }
@@ -330,9 +336,16 @@ const finRonda = () => {
     noIr.disabled=true;
     apuesta.style.display="none";
     btnRepartir.style.display= "block";
-    borrarCartas(cartasCPU);
-    borrarCartas(cartasMesa);
-    borrarCartas(cartasJugador);
+    btnRepartir.disabled=true;
+    setTimeout(()=>{
+        btnRepartir.disabled=false;
+    },1000);
+    setTimeout (() => { 
+        cartasCPU.children[0].src=carta1;
+    }, 250);
+    setTimeout (() => { 
+        cartasCPU.children[1].src=carta2;
+    }, 500);
 
 }
 
@@ -382,6 +395,8 @@ const comprobarManoMaquina = (c1Number,c2Number,c1Type,c2Type) => {
         dineroEnJuego(apostadoMaquina);
         hora.textContent="Gana el jugador por retirada de la Maquina";
         hora.style.opacity=1;
+        enviar.disabled=true;
+        noIr.disabled=true;
         ganaJugador();
     }
 }
