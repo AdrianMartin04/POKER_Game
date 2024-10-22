@@ -150,7 +150,7 @@ const comprobarTrio = (c1Number,c2Number) => {
                 cont++;
         });
         if(cont==3)
-            hayTrio= true;
+            haytrio= true;
     });
     return haytrio;
 }
@@ -321,7 +321,7 @@ const dineroEnJuego = (apostadoMaquina) =>{
     total+=totalAux;
     totalApuesta.textContent="";
     totalApuesta.textContent=total;
-    console.log(totalApuesta.textContent)
+    // console.log(totalApuesta.textContent)
     miApuesta.textContent=0;
 }
 
@@ -363,16 +363,16 @@ const ganaMaquina = () => {
 
 let apostadoMaquina=0;
 const comprobarManoMaquina = (c1Number,c2Number,c1Type,c2Type) => {
-    let pareja = comprobarPareja(c1Number,c2Number);
-    let doblePareja =  comprobarDoblePareja(c1Number,c2Number);
-    let trio =  comprobarTrio(c1Number,c2Number);
+    let pareja = comprobarPareja(c1Number,c2Number);//funciona
+    let doblePareja =  comprobarDoblePareja(c1Number,c2Number);//funciona
+    let trio =  comprobarTrio(c1Number,c2Number);//funciona
     let full = false;
     if(pareja && trio)
         full = true;
     let escalera =  comprobarEscalera(c1Number,c2Number);
-    let color = comprobarColor(c1Type,c2Type);
+    let color = comprobarColor(c1Type,c2Type);//funciona No es seguro
     let escaleraColor =  comprobarEscaleraColor(c1Number, c2Number, c1Type, c2Type);
-    let poker =  comprobarPoker(c1Number,c2Number);
+    let poker =  comprobarPoker(c1Number,c2Number);//funciona No es seguro
 
     if(poker || escaleraColor || color || escalera){
         if(miApuesta.textContent == 0){
@@ -431,16 +431,16 @@ const enviarApuesta = () => {
 }
 
 const mano = (c1Number,c2Number,c1Type,c2Type) => {
-    let pareja = comprobarPareja(c1Number,c2Number);
-    let doblePareja =  comprobarDoblePareja(c1Number,c2Number);
-    let trio =  comprobarTrio(c1Number,c2Number);
+    let pareja = comprobarPareja(c1Number,c2Number);  // Funciona
+    let doblePareja =  comprobarDoblePareja(c1Number,c2Number); // Funciona
+    let trio =  comprobarTrio(c1Number,c2Number); // Funciona
     let full = false;
-    if(pareja && trio)
+    if(pareja && trio) // en teoria funciona
         full = true;
     let escalera =  comprobarEscalera(c1Number,c2Number);
-    let color = comprobarColor(c1Type,c2Type);
+    let color = comprobarColor(c1Type,c2Type); // Funciona No es seguro
     let escaleraColor =  comprobarEscaleraColor(c1Number, c2Number, c1Type, c2Type);
-    let poker =  comprobarPoker(c1Number,c2Number);
+    let poker =  comprobarPoker(c1Number,c2Number); // Funciona No es seguro
 
     if(poker)
         return 8;
@@ -452,8 +452,10 @@ const mano = (c1Number,c2Number,c1Type,c2Type) => {
         return 5;
     else if (full)
         return 4;
-    else if (trio)
+    else if (trio){
+        console.log("trio");
         return 3;
+    }
     else if (doblePareja)
         return 2;
     else if (pareja)
