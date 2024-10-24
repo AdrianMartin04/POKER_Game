@@ -1,4 +1,4 @@
-const cartas = ['2_of_clubs.png', '2_of_diamonds.png', '2_of_hearts.png', '2_of_spades.png','3_of_clubs.png', '3_of_diamonds.png', '3_of_hearts.png', '3_of_spades.png','4_of_clubs.png', '4_of_diamonds.png', '4_of_hearts.png', '4_of_spades.png','5_of_clubs.png', '5_of_diamonds.png', '5_of_hearts.png', '5_of_spades.png','6_of_clubs.png', '6_of_diamonds.png', '6_of_hearts.png', '6_of_spades.png','7_of_clubs.png', '7_of_diamonds.png', '7_of_hearts.png', '7_of_spades.png','8_of_clubs.png', '8_of_diamonds.png', '8_of_hearts.png', '8_of_spades.png','9_of_clubs.png', '9_of_diamonds.png', '9_of_hearts.png', '9_of_spades.png','10_of_clubs.png', '10_of_diamonds.png', '10_of_hearts.png', '10_of_spades.png','ace_of_clubs.png', 'ace_of_diamonds.png','ace_of_hearts.png', 'ace_of_spades2.png','jack_of_clubs.png', 'jack_of_diamonds.png', 'jack_of_hearts.png', 'jack_of_spades.png','king_of_clubs.png', 'king_of_diamonds.png', 'king_of_hearts.png', 'king_of_spades.png','queen_of_clubs.png', 'queen_of_diamonds.png', 'queen_of_hearts.png', 'queen_of_spades.png'];
+const cartas = ['2_of_clubs.png', '2_of_diamonds.png', '2_of_hearts.png', '2_of_spades.png','3_of_clubs.png', '3_of_diamonds.png', '3_of_hearts.png', '3_of_spades.png','4_of_clubs.png', '4_of_diamonds.png', '4_of_hearts.png', '4_of_spades.png','5_of_clubs.png', '5_of_diamonds.png', '5_of_hearts.png', '5_of_spades.png','6_of_clubs.png', '6_of_diamonds.png', '6_of_hearts.png',  '7_of_diamonds.png', '7_of_hearts.png', '7_of_spades.png','8_of_clubs.png', '8_of_diamonds.png', '8_of_hearts.png', '8_of_spades.png','9_of_clubs.png', '9_of_diamonds.png', '9_of_hearts.png', '9_of_spades.png','10_of_clubs.png', '10_of_diamonds.png', '10_of_hearts.png', '10_of_spades.png','ace_of_clubs.png', 'ace_of_diamonds.png','ace_of_hearts.png', 'ace_of_spades2.png','jack_of_clubs.png', 'jack_of_diamonds.png', 'jack_of_hearts.png', 'jack_of_spades.png','king_of_clubs.png', 'king_of_diamonds.png', 'king_of_hearts.png', 'king_of_spades.png','queen_of_clubs.png', 'queen_of_diamonds.png', 'queen_of_hearts.png', 'queen_of_spades.png'];
 const cartasJugador = document.getElementById("jugador");
 const cartasMesa = document.getElementById("comun");
 const cartasCPU = document.getElementById("cpu");
@@ -23,21 +23,21 @@ apuesta.style.display="none";
 let baraja  = [];
     
 const barajarCartas = () =>{
-    window.clearTimeout();
-    borrarCartas(cartasCPU);
-    borrarCartas(cartasMesa);
-    borrarCartas(cartasJugador);
-    baraja = [...cartas];
-    numerosMesa = [];
-    tiposMesa = [];
-    hora.textContent="¡Es hora de elegir tu apuesta!";
-    hora.style.opacity=0;
-    apuesta.style.display="flex";
-    btnRepartir.style.display="none";
-    enviar.disabled=true;
-    noIr.disabled=true;
-    baraja.sort(() => Math.random() - 0.5);
-    repartirCartasInicio();
+        window.clearTimeout();
+        borrarCartas(cartasCPU);
+        borrarCartas(cartasMesa);
+        borrarCartas(cartasJugador);
+        baraja = [...cartas];
+        numerosMesa = [];
+        tiposMesa = [];
+        hora.textContent="¡Es hora de elegir tu apuesta!";
+        hora.style.opacity=0;
+        apuesta.style.display="flex";
+        btnRepartir.style.display="none";
+        enviar.disabled=true;
+        noIr.disabled=true;
+        baraja.sort(() => Math.random() - 0.5);
+        repartirCartasInicio();
 }
 const repartirCartasInicio = () => {
     repartirTimeOut(cartasJugador, 2, 500);
@@ -125,7 +125,6 @@ const comprobarCartasEnMesa = () => {
 const comprobarPareja = (c1Number,c2Number) =>{
     let arrayNumberAux = [];
     arrayNumberAux = [...numerosMesa,c1Number,c2Number];
-    console.log(arrayNumberAux)
     let hayPareja=false;
     arrayNumberAux.forEach(numero => {
         let cont = 0;
@@ -185,7 +184,7 @@ const comprobarDoblePareja = (c1Number,c2Number) => {
             });
             if (cont == 2) {
                 cont2++;
-                yaContados.push(numero); // Marcar este número como contado
+                yaContados.push(numero);
             }
         }
     });
@@ -245,31 +244,29 @@ const ordenarCartas = (array) => {
     return cartasOrdenadas; // Devuelve el array de cartas ordenadas
 };
 const comprobarEscalera = (c1Number, c2Number) => {
-    let arrayNumberAux = [];
-    arrayNumberAux = [...numerosMesa,c1Number,c2Number];
+    let arrayNumberAux = [...numerosMesa,c1Number,c2Number];
     let arraySinDuplicados = [];
     arrayNumberAux.forEach((numero) => {
         if (!arraySinDuplicados.includes(numero)) {
             arraySinDuplicados.push(numero);
         }
     });
-    let arrayOrdenado = ordenarCartas(arraySinDuplicados);
-    console.log(arrayOrdenado)
-    let hayEscalera = false;
-    
-    arrayOrdenado.forEach((numero, i) => {
-        let consecutivos = 1;
-        arrayOrdenado.forEach((numeroSiguiente, j) => {
-            if (i < j && numeroSiguiente == (numero + consecutivos)) {
-                consecutivos++;
-            }
-        });
-
-        if (consecutivos >= 5) {
-            hayEscalera = true;
-        }
+    arraySinDuplicados.forEach((n,i) => {
+        arraySinDuplicados[i]=n.replace("jack", "11").replace("queen", "12").replace("king","13").replace("ace","14");
     });
-
+    let arrayOrdenado = arraySinDuplicados.sort((a,b) => a - b);
+    let hayEscalera = false;
+    let consecutivos = 1;
+    for (let i = 0; i < arrayOrdenado.length-1; i++) {
+        if (arrayOrdenado[i] == ((arrayOrdenado[i + 1]) - 1)) {
+            consecutivos++;
+        } else {
+            consecutivos = 1;
+        }
+        if (consecutivos >= 5) {
+            hayEscalera=true;
+        }
+    }
     return hayEscalera;
 };
 
@@ -285,32 +282,37 @@ const comprobarEscaleraColor = (c1Number, c2Number, c1Type, c2Type) => {
             arraySinDuplicados.push(numero);
         }
     });
-
-    let arrayOrdenado = ordenarCartas(arraySinDuplicados);
-
     let consecutivos = 1;
-    let hayEscalera = false;
-    let tiposConsecutivos = [];
-
-    arrayOrdenado.forEach((numero, i) => {
-        if (i < arrayOrdenado.length - 1) {
-            if (arrayOrdenado[i + 1] === numero + 1) {
-                consecutivos++;
-                tiposConsecutivos.push(arrayTypeAux[i]);
-
-                if (consecutivos >= 5) {
-                    tiposConsecutivos.push(arrayTypeAux[i + 1]); 
-                    hayEscalera = true; 
-                }
-            } else {
-                consecutivos = 1;
-                tiposConsecutivos = [];
-            }
-        }
+    arraySinDuplicados.forEach((n,i) => {
+        arraySinDuplicados[i]=n.replace("jack", "11").replace("queen", "12").replace("king","13").replace("ace","14");
     });
+    let arrayOrdenado = arraySinDuplicados.sort((a,b) => a - b);
+    arrayNumberAux.forEach((n,i) => {
+        arrayNumberAux[i]=n.replace("jack", "11").replace("queen", "12").replace("king","13").replace("ace","14");
+    });
+    let hayEscalera = false;
+    let numConsecutivos = [];
 
-    const todosDelMismoTipo = tiposConsecutivos.length > 0 && tiposConsecutivos.every(tipo => tipo == tiposConsecutivos[0]);
-
+    for (let i = 0; i < arrayOrdenado.length-1; i++) {
+        if (arrayOrdenado[i + 1] == (parseInt(arrayOrdenado[i]) + 1)) {
+            consecutivos++;
+            numConsecutivos.push(arrayOrdenado[i]);
+        } else {
+            consecutivos = 1;
+        }  
+        if (consecutivos >= 5) {
+            hayEscalera = true; 
+        }     
+    }
+    
+    let tipos = [];
+    numConsecutivos.forEach(num => {
+        let index = arrayNumberAux.indexOf(num);
+        if (index != -1)
+            tipos.push(arrayTypeAux[index]);
+    });
+    
+    const todosDelMismoTipo = tipos.every((tipo) => tipo == tipos[0]);
     return hayEscalera && todosDelMismoTipo;
 };
 
@@ -363,16 +365,16 @@ const ganaMaquina = () => {
 
 let apostadoMaquina=0;
 const comprobarManoMaquina = (c1Number,c2Number,c1Type,c2Type) => {
-    let pareja = comprobarPareja(c1Number,c2Number);//funciona
-    let doblePareja =  comprobarDoblePareja(c1Number,c2Number);//funciona
-    let trio =  comprobarTrio(c1Number,c2Number);//funciona
+    let pareja = comprobarPareja(c1Number,c2Number);
+    let doblePareja =  comprobarDoblePareja(c1Number,c2Number);
+    let trio =  comprobarTrio(c1Number,c2Number);
     let full = false;
     if(pareja && trio)
         full = true;
     let escalera =  comprobarEscalera(c1Number,c2Number);
-    let color = comprobarColor(c1Type,c2Type);//funciona No es seguro
+    let color = comprobarColor(c1Type,c2Type);
     let escaleraColor =  comprobarEscaleraColor(c1Number, c2Number, c1Type, c2Type);
-    let poker =  comprobarPoker(c1Number,c2Number);//funciona No es seguro
+    let poker =  comprobarPoker(c1Number,c2Number);
 
     if(poker || escaleraColor || color || escalera){
         if(miApuesta.textContent == 0){
@@ -431,16 +433,16 @@ const enviarApuesta = () => {
 }
 
 const mano = (c1Number,c2Number,c1Type,c2Type) => {
-    let pareja = comprobarPareja(c1Number,c2Number);  // Funciona
-    let doblePareja =  comprobarDoblePareja(c1Number,c2Number); // Funciona
-    let trio =  comprobarTrio(c1Number,c2Number); // Funciona
+    let pareja = comprobarPareja(c1Number,c2Number);
+    let doblePareja =  comprobarDoblePareja(c1Number,c2Number);
+    let trio =  comprobarTrio(c1Number,c2Number);
     let full = false;
-    if(pareja && trio) // en teoria funciona
+    if(pareja && trio)
         full = true;
     let escalera =  comprobarEscalera(c1Number,c2Number);
-    let color = comprobarColor(c1Type,c2Type); // Funciona No es seguro
+    let color = comprobarColor(c1Type,c2Type); 
     let escaleraColor =  comprobarEscaleraColor(c1Number, c2Number, c1Type, c2Type);
-    let poker =  comprobarPoker(c1Number,c2Number); // Funciona No es seguro
+    let poker =  comprobarPoker(c1Number,c2Number);
 
     if(poker)
         return 8;
@@ -453,7 +455,6 @@ const mano = (c1Number,c2Number,c1Type,c2Type) => {
     else if (full)
         return 4;
     else if (trio){
-        console.log("trio");
         return 3;
     }
     else if (doblePareja)
@@ -560,7 +561,7 @@ const comprobarGanador = () =>{
             numerosJugador[0] = numerosJugador[1];
             numerosJugador[1] = aux;
         }
-        console.log(numerosJugador);
+        // console.log(numerosJugador);
         if(c1Number == "ace")
             c1Number =  14;
         if(c2Number == "ace")
@@ -583,7 +584,7 @@ const comprobarGanador = () =>{
             numerosMaquina[0] = numerosMaquina[1];
             numerosMaquina[1] = aux;
         }
-        console.log(numerosMaquina);
+        // console.log(numerosMaquina);
         if (numerosJugador[0] > numerosMaquina[0]){
             hora.textContent="Gana el jugador con "+mj;
             hora.style.opacity=1;
@@ -613,6 +614,11 @@ const comprobarGanador = () =>{
 
         }
 
+    }
+    if(saldo.textContent == 0){
+        setTimeout(() => {
+            window.location.href = "./derrota.html";
+        }, 500);
     }
 
 }
