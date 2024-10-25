@@ -545,8 +545,8 @@ const rindeJugador = () => {
 const seguirJugando = () => {
     let a = parseInt(totalApuesta.textContent)*2;
     if(a < parseInt(saldo.textContent)){
+        saldo.textContent= parseInt(saldo.textContent)-parseInt(totalApuesta.textContent);
         totalApuesta.textContent = a;
-        saldo.textContent= parseInt(saldo.textContent)-a;
     }else{
         totalApuesta.textContent = parseInt(saldo.textContent);
     }
