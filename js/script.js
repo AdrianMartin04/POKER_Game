@@ -22,6 +22,8 @@ ir.style.display="none";
 rendirse.style.display="none";
 apuesta.style.display="none";
 
+let yaApostado=0;
+
 let baraja  = [];
 const barajarCartas = () =>{
         borrarCartas(cartasCPU);
@@ -30,6 +32,8 @@ const barajarCartas = () =>{
         baraja = [...cartas];
         numerosMesa = [];
         tiposMesa = [];
+        yaApostado = 0;
+        totalEnRonda = 0;
         hora.textContent="¡Es hora de elegir tu apuesta!";
         hora.style.opacity=0;
         apuesta.style.display="flex";
@@ -299,7 +303,9 @@ const finRonda = () => {
 }
 
 const ganaJugador = () =>{
+    console.log(totalApuesta)
     let ganancia=parseInt(totalApuesta.textContent);
+    console.log(ganancia);
     saldo.textContent = parseInt(saldo.textContent) + ganancia;
     totalApuesta.textContent = 0;
     finRonda();
@@ -350,6 +356,7 @@ const comprobarManoMaquina = (c1Number,c2Number,c1Type,c2Type) => {
     if(num==8 || num==7 || num==6 || num==5){
         if(miApuesta.textContent == 0){
             apostadoMaquina=(parseInt(miApuesta.textContent)+100)*2;
+            yaApostado=apostadoMaquina;
             dineroEnJuego(apostadoMaquina);
             hora.textContent = "La máquina ha apostado, ¿quieres igualar o retirarte?";
             hora.style.opacity = 1;
@@ -366,6 +373,7 @@ const comprobarManoMaquina = (c1Number,c2Number,c1Type,c2Type) => {
     }else if(num==4 || num==3 || num==2 || num==1){
         if(miApuesta.textContent == 0){
             apostadoMaquina=100;
+            yaApostado=apostadoMaquina;
             dineroEnJuego(apostadoMaquina);
             hora.textContent = "La máquina ha apostado, ¿quieres igualar o retirarte?";
             hora.style.opacity = 1;
@@ -542,15 +550,18 @@ const rindeJugador = () => {
     finRonda();
 }
 
+let ronda = 0;
 const seguirJugando = () => {
-    let a = parseInt(totalApuesta.textContent)*2;
-    if(a < parseInt(saldo.textContent)){
-        saldo.textContent= parseInt(saldo.textContent)-parseInt(totalApuesta.textContent);
-        totalApuesta.textContent = a;
+    let miApu = yaApostado;
+    console.log(totalApuesta.textContent)
+    if(miApu < parseInt(saldo.textContent)){
+        saldo.textContent= parseInt(saldo.textContent)-miApu;
+        totalApuesta.textContent = parseInt(totalApuesta.textContent)+yaApostado;
     }else{
         totalApuesta.textContent = parseInt(totalApuesta.textContent)+parseInt(saldo.textContent);
         saldo.textContent=0;
     }
+    console.log(totalApuesta.textContent)
     hora.style.opacity=0;
     enviar.style.display = "block";
     noIr.style.display = "block";
