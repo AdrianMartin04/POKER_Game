@@ -548,7 +548,8 @@ const seguirJugando = () => {
         saldo.textContent= parseInt(saldo.textContent)-parseInt(totalApuesta.textContent);
         totalApuesta.textContent = a;
     }else{
-        totalApuesta.textContent = parseInt(saldo.textContent);
+        totalApuesta.textContent = parseInt(totalApuesta.textContent)+parseInt(saldo.textContent);
+        saldo.textContent=0;
     }
     hora.style.opacity=0;
     enviar.style.display = "block";
