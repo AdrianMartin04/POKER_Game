@@ -33,6 +33,7 @@ const barajarCartas = () =>{
         numerosMesa = [];
         tiposMesa = [];
         yaApostado = 0;
+        ronda = 0;
         totalEnRonda = 0;
         hora.textContent="¡Es hora de elegir tu apuesta!";
         hora.style.opacity=0;
@@ -45,7 +46,13 @@ const barajarCartas = () =>{
         enviar.disabled=true;
         noIr.disabled=true;
         baraja.sort(() => Math.random() - 0.5);
+        ciega();
         repartirCartasInicio();
+}
+
+const ciega = () => {
+    saldo.textContent = parseInt(saldo.textContent) - 100;
+    totalApuesta.textContent=200;
 }
 
 const repartirCartasInicio = () => {
@@ -303,9 +310,7 @@ const finRonda = () => {
 }
 
 const ganaJugador = () =>{
-    console.log(totalApuesta)
     let ganancia=parseInt(totalApuesta.textContent);
-    console.log(ganancia);
     saldo.textContent = parseInt(saldo.textContent) + ganancia;
     totalApuesta.textContent = 0;
     finRonda();
@@ -349,10 +354,11 @@ const mano = (c1Number,c2Number,c1Type,c2Type) => {
         return 0;
 }
 
+let ronda = 0;
 let apostadoMaquina=0;
 const comprobarManoMaquina = (c1Number,c2Number,c1Type,c2Type) => {
     let num = mano(c1Number,c2Number,c1Type,c2Type);
-
+    let aux = [remplazoNum(c1Number), remplazoNum(c2Number)];
     if(num==8 || num==7 || num==6 || num==5){
         if(miApuesta.textContent == 0){
             apostadoMaquina=(parseInt(miApuesta.textContent)+100)*2;
@@ -388,13 +394,19 @@ const comprobarManoMaquina = (c1Number,c2Number,c1Type,c2Type) => {
         }
         
     }else if(miApuesta.textContent>0){
-        dineroEnJuego(apostadoMaquina);
-        hora.textContent="Gana el jugador por retirada de la Maquina";
-        hora.style.opacity=1;
-        enviar.disabled=true;
-        noIr.disabled=true;
-        ganaJugador();
-    }
+            if(aux[0]>9 && aux[1]>10 && ronda==0){
+                ronda++;
+                apostadoMaquina=(parseInt(miApuesta.textContent));
+                dineroEnJuego(apostadoMaquina);
+            }else{
+                dineroEnJuego(apostadoMaquina);
+                hora.textContent="Gana el jugador por retirada de la Maquina";
+                hora.style.opacity=1;
+                enviar.disabled=true;
+                noIr.disabled=true;
+                ganaJugador();
+            }
+    } 
     return true;
 }
 
@@ -550,10 +562,8 @@ const rindeJugador = () => {
     finRonda();
 }
 
-let ronda = 0;
 const seguirJugando = () => {
     let miApu = yaApostado;
-    console.log(totalApuesta.textContent)
     if(miApu < parseInt(saldo.textContent)){
         saldo.textContent= parseInt(saldo.textContent)-miApu;
         totalApuesta.textContent = parseInt(totalApuesta.textContent)+yaApostado;
@@ -561,7 +571,6 @@ const seguirJugando = () => {
         totalApuesta.textContent = parseInt(totalApuesta.textContent)+parseInt(saldo.textContent);
         saldo.textContent=0;
     }
-    console.log(totalApuesta.textContent)
     hora.style.opacity=0;
     enviar.style.display = "block";
     noIr.style.display = "block";
