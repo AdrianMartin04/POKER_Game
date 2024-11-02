@@ -1,4 +1,7 @@
+// array of cards
 const cartas = ['2_of_clubs.png', '2_of_diamonds.png', '2_of_hearts.png', '2_of_spades.png','3_of_clubs.png', '3_of_diamonds.png', '3_of_hearts.png', '3_of_spades.png','4_of_clubs.png', '4_of_diamonds.png', '4_of_hearts.png', '4_of_spades.png','5_of_clubs.png', '5_of_diamonds.png', '5_of_hearts.png', '5_of_spades.png','6_of_clubs.png', '6_of_diamonds.png', '6_of_hearts.png',  '7_of_diamonds.png', '7_of_hearts.png', '7_of_spades.png','8_of_clubs.png', '8_of_diamonds.png', '8_of_hearts.png', '8_of_spades.png','9_of_clubs.png', '9_of_diamonds.png', '9_of_hearts.png', '9_of_spades.png','10_of_clubs.png', '10_of_diamonds.png', '10_of_hearts.png', '10_of_spades.png','ace_of_clubs.png', 'ace_of_diamonds.png','ace_of_hearts.png', 'ace_of_spades2.png','jack_of_clubs.png', 'jack_of_diamonds.png', 'jack_of_hearts.png', 'jack_of_spades.png','king_of_clubs.png', 'king_of_diamonds.png', 'king_of_hearts.png', 'king_of_spades.png','queen_of_clubs.png', 'queen_of_diamonds.png', 'queen_of_hearts.png', 'queen_of_spades.png'];
+
+//elements of html
 const cartasJugador = document.getElementById("jugador");
 const cartasMesa = document.getElementById("comun");
 const cartasCPU = document.getElementById("cpu");
@@ -14,6 +17,7 @@ const btnRepartir = document.getElementById("btn__repartir");
 const ir = document.getElementById("ir");
 const rendirse = document.getElementById("rendirse");
 
+// Initialize elements
 hora.style.color= "var(--oro)";
 hora.style.opacity=0;
 enviar.disabled=true;
@@ -22,9 +26,13 @@ ir.style.display="none";
 rendirse.style.display="none";
 apuesta.style.display="none";
 
+//already bet
 let yaApostado=0;
 
+//array for shuffled cards
 let baraja  = [];
+
+// function to shuffle cards
 const barajarCartas = () =>{
         borrarCartas(cartasCPU);
         borrarCartas(cartasMesa);
@@ -50,25 +58,31 @@ const barajarCartas = () =>{
         repartirCartasInicio();
 }
 
+// function for the blind
 const ciega = () => {
     saldo.textContent = parseInt(saldo.textContent) - 100;
     totalApuesta.textContent=200;
 }
 
+// function  to start the game, to deal the cards
 const repartirCartasInicio = () => {
     repartirTimeOut(cartasJugador, 2, 500);
     repartirTimeOut(cartasCPU,2,1000);
     repartirTimeOut(cartasMesa,3,1500);
 }
 
+// deal the cards with timeOut
 const repartirTimeOut = (objetivo, cantidad, tiempo) =>{
     setTimeout (() => { 
         repartir(objetivo,cantidad);
     }, tiempo);
 }
 
+// cards of cpu
 let carta1;
 let carta2;
+
+// append cards into objective's div. Deal the cards with timeOut
 const repartir = (objetivo, cantidad) => {
     if(objetivo.id=="cpu"){
         for (let i = 0; i < cantidad; i++) {
@@ -100,6 +114,7 @@ const repartir = (objetivo, cantidad) => {
     }, 2000);
 }
 
+// increase or  decrease the player's bet
 const apostar = (event) => {
     if(event.target.nodeName=="BUTTON"){
         if(event.target.textContent.includes('+'))
@@ -109,8 +124,13 @@ const apostar = (event) => {
     }
 }
 
+// array to store the number of cards on the table
 let numerosMesa = Array();
+
+// array to store the suit of cards on the cpu's table
 let tiposMesa = Array();
+
+// check the cards on the table every round
 const comprobarCartasEnMesa = () => {
     if(cartasMesa.children.length==3){
         for(i=0; i<3; i++){
@@ -137,6 +157,7 @@ const comprobarCartasEnMesa = () => {
     }    
 }
 
+// check if the hand to be compared has any repeated numbers
 const comprobarIguales = (cant, c1Number, c2Number) => {
     let arrayNumberAux = [];
     arrayNumberAux = [...numerosMesa,c1Number,c2Number];
@@ -153,18 +174,22 @@ const comprobarIguales = (cant, c1Number, c2Number) => {
     return hay;
 }
 
+// check  if the hand to be compared has pair
 const comprobarPareja = (c1Number,c2Number) =>{
     return comprobarIguales(2,c1Number,c2Number);
 }
 
+// check if  the hand to be compared has three
 const comprobarTrio = (c1Number,c2Number) => {
     return comprobarIguales(3,c1Number,c2Number);
 }
 
+// check if the hand to be compare has Poker
 const comprobarPoker = (c1Number,c2Number) =>{
     return comprobarIguales(4,c1Number,c2Number);
 }
 
+// check if  the hand to be compare has two pair
 const comprobarDoblePareja = (c1Number,c2Number) => {
     let arrayNumberAux = [];
     arrayNumberAux = [...numerosMesa,c1Number,c2Number];
@@ -189,6 +214,7 @@ const comprobarDoblePareja = (c1Number,c2Number) => {
     return hayDoblePareja;
 }
 
+// check if  the hand to be compare has flush
 const comprobarColor =  (c1Type,c2Type) => {
     let arrayTypeAux = [];
     arrayTypeAux = [...tiposMesa, c1Type, c2Type];
@@ -205,6 +231,7 @@ const comprobarColor =  (c1Type,c2Type) => {
     return hayColor;
 }
 
+// replace the number of of the letters on the cards with numbers
 const remplazo = (array) =>{
     array.forEach((n,i) => {
         array[i]=n.replace("jack", "11").replace("queen", "12").replace("king","13").replace("ace","14");
@@ -212,6 +239,7 @@ const remplazo = (array) =>{
     return array;
 }
 
+// check if the hand to be compare has straight
 const comprobarEscalera = (c1Number, c2Number) => {
     let arrayNumberAux = [...numerosMesa,c1Number,c2Number];
     let arraySinDuplicados = [];
@@ -237,6 +265,7 @@ const comprobarEscalera = (c1Number, c2Number) => {
     return hayEscalera;
 };
 
+// check if the hand to be compare has straight flush
 const comprobarEscaleraColor = (c1Number, c2Number, c1Type, c2Type) => {
     let arrayNumberAux = [];
     arrayNumberAux = [...numerosMesa,c1Number,c2Number];
@@ -275,6 +304,7 @@ const comprobarEscaleraColor = (c1Number, c2Number, c1Type, c2Type) => {
     return hayEscalera && todosDelMismoTipo;
 };
 
+// update the money in play 
 const dineroEnJuego = (apostadoMaquina) =>{
     let apuestaJugador=parseInt(miApuesta.textContent);
     let total= parseInt(apostadoMaquina)+parseInt(apuestaJugador);
@@ -285,12 +315,14 @@ const dineroEnJuego = (apostadoMaquina) =>{
     miApuesta.textContent=0;
 }
 
+// remove all cards
 const borrarCartas = (array) => {
     Array.from(array.children).forEach(carta => {
         carta.remove();
     });
 }
 
+// makes the necessary changes at the enf of the rounds
 const finRonda = () => {
     enviar.disabled=true;
     noIr.disabled=true;
@@ -309,6 +341,7 @@ const finRonda = () => {
 
 }
 
+// function for when the player wins the round
 const ganaJugador = () =>{
     let ganancia=parseInt(totalApuesta.textContent);
     saldo.textContent = parseInt(saldo.textContent) + ganancia;
@@ -316,11 +349,13 @@ const ganaJugador = () =>{
     finRonda();
 }
 
+// function for when the cpu wins the round
 const ganaMaquina = () => {
     totalApuesta.textContent = 0;
     finRonda();
 }
 
+// check the hand
 const mano = (c1Number,c2Number,c1Type,c2Type) => {
     let pareja = comprobarPareja(c1Number,c2Number);
     let doblePareja =  comprobarDoblePareja(c1Number,c2Number);
@@ -356,6 +391,8 @@ const mano = (c1Number,c2Number,c1Type,c2Type) => {
 
 let ronda = 0;
 let apostadoMaquina=0;
+
+// check the hand  of the cpu
 const comprobarManoMaquina = (c1Number,c2Number,c1Type,c2Type) => {
     let num = mano(c1Number,c2Number,c1Type,c2Type);
     let aux = [remplazoNum(c1Number), remplazoNum(c2Number)];
@@ -410,6 +447,7 @@ const comprobarManoMaquina = (c1Number,c2Number,c1Type,c2Type) => {
     return true;
 }
 
+// function of calculate bet of cpu
 const apuestaMaquina = () =>{
     let c1 = carta1.split("images/")[1];
     let c2 = carta2.split("images/")[1];
@@ -422,6 +460,7 @@ const apuestaMaquina = () =>{
     return comprobarManoMaquina(c1Number,c2Number,c1Type,c2Type);
 }
 
+// function of evento "ir"
 const enviarApuesta = () => {
     if(parseInt(cantidad.value)>parseInt(saldo.textContent)){
         cantidad.value=saldo.textContent;
@@ -438,6 +477,7 @@ const enviarApuesta = () => {
         repartirMesa();
 }
 
+// change number that return "mano" for number of hand
 const pasarNumNombre = (mano) => {
     let mm="";
     if(mano == 8)
@@ -461,10 +501,12 @@ const pasarNumNombre = (mano) => {
     return mm;
 }
 
+// replace  number of cards with name of cards
 const remplazoNum = (n) => {
     return n.replace("jack", "11").replace("queen", "12").replace("king","13").replace("ace","14");
 }
 
+// check wins
 const comprobarGanador = () =>{
     // Maquina
     let c1 = carta1.split("images/")[1];
@@ -545,6 +587,7 @@ const comprobarGanador = () =>{
     }
 }
 
+// deal cards on the table
 const repartirMesa = () =>{
     if(cartasMesa.children.length<5)
         repartir(cartasMesa,1);
@@ -556,12 +599,14 @@ const repartirMesa = () =>{
     }
 }
 
+// the players gives up
 const rindeJugador = () => {
     hora.textContent = "Gana la Maquina por rendición del jugador";
     totalApuesta.textContent = 0;
     finRonda();
 }
 
+// keep playing
 const seguirJugando = () => {
     let miApu = yaApostado;
     if(miApu < parseInt(saldo.textContent)){
@@ -580,6 +625,7 @@ const seguirJugando = () => {
     repartirMesa();
 }
 
+// pass bet
 const pasarApuesta = () =>{
     hora.style.opacity=0;
     enviar.style.display = "block";
@@ -593,6 +639,8 @@ const pasarApuesta = () =>{
         repartirMesa();
 }
 
+
+//declare events
 btnRepartir.addEventListener("click", barajarCartas);
 apuesta.addEventListener("click", apostar)
 enviar.addEventListener("click", enviarApuesta);
